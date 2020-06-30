@@ -135,3 +135,48 @@ if (!function_exists('jamstack_deployments_fire_webhook_edit_term')) {
     }
     add_action('edit_term', 'jamstack_deployments_fire_webhook_edit_term', 10, 3);
 }
+
+if (!function_exists('jamstack_deployments_fire_webhook_updated_option')) {
+    /**
+     * Fire a request to the webhook when a post has been saved.
+     *
+     * @param int $id
+     * @param WP_Post $post
+     * @param boolean $update
+     * @return void
+     */
+    function jamstack_deployments_fire_webhook_updated_option($option_name, $old_value, $value) {
+        \Crgeary\JAMstackDeployments\WebhookTrigger::triggerUpdatedOption($option_name, $old_value, $value);
+    }
+    add_action('updated_option', 'jamstack_deployments_fire_webhook_updated_option', 10, 3);
+}
+
+if (!function_exists('jamstack_deployments_fire_webhook_update_site_option')) {
+    /**
+     * Fire a request to the webhook when a post has been saved.
+     *
+     * @param int $id
+     * @param WP_Post $post
+     * @param boolean $update
+     * @return void
+     */
+    function jamstack_deployments_fire_webhook_update_site_option($option_name, $old_value, $value, $network_id = null) {
+        \Crgeary\JAMstackDeployments\WebhookTrigger::triggerUpdateSiteOption($option_name, $old_value, $value, $network_id);
+    }
+    add_action('update_site_option', 'jamstack_deployments_fire_webhook_update_site_option', 10, 4);
+}
+
+if (!function_exists('jamstack_deployments_fire_webhook_add_site_option')) {
+    /**
+     * Fire a request to the webhook when a post has been saved.
+     *
+     * @param int $id
+     * @param WP_Post $post
+     * @param boolean $update
+     * @return void
+     */
+    function jamstack_deployments_fire_webhook_add_site_option($option_name, $old_value, $value) {
+        \Crgeary\JAMstackDeployments\WebhookTrigger::triggerAddSiteOption($option_name, $old_value, $value);
+    }
+    add_action('add_site_option', 'jamstack_deployments_fire_webhook_add_site_option', 10, 3);
+}

@@ -130,6 +130,51 @@ class WebhookTrigger
     }
 
     /**
+     * Fire a request to the webhook when an option has been updated.
+     *
+     * @param int $id
+     * @param int $post
+     * @param string $tax_slug
+     * @param object $term
+     * @param array $object_ids
+     * @return void
+     */
+    public static function triggerUpdatedOption($option_name, $old_value, $value)
+    {
+        self::fireWebhook($option_name, 'option');
+    }
+
+    /**
+     * Fire a request to the webhook when an site_option has been updated.
+     *
+     * @param int $id
+     * @param int $post
+     * @param string $tax_slug
+     * @param object $term
+     * @param array $object_ids
+     * @return void
+     */
+    public static function triggerUpdateSiteOption($option_name, $old_value, $value)
+    {
+        self::fireWebhook($option_name, 'site_option');
+    }
+
+    /**
+     * Fire a request to the webhook when an site_option has been added.
+     *
+     * @param int $id
+     * @param int $post
+     * @param string $tax_slug
+     * @param object $term
+     * @param array $object_ids
+     * @return void
+     */
+    public static function triggerAddSiteOption($option_name, $old_value, $value)
+    {
+        self::fireWebhook($option_name, 'site_option');
+    }
+
+    /**
      * Show the admin bar css & js
      * 
      * @todo move this somewhere else

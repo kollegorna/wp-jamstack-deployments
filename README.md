@@ -100,11 +100,17 @@ Like so:
 add_filter(
     'jamstack_deployments_webhook_request_args',
     function ($post_id, $post) {
+        $post_type = is_string($post)
+            ? $post
+            : (!empty($post->post_type)
+                ? $post->post_type
+                : $post->taxonomy);
+
         return [
             'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
             'body' => json_encode([
                 "ID" => $post_id,
-                "post_type" => (!empty($post->post_type) ? $post->post_type : $post->taxonomy),
+                "post_type" => $post_type,
             ]),
             'method' => 'POST',
             'data_format' => 'body',

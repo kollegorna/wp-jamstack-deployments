@@ -67,6 +67,14 @@ class Settings
             'legend' => 'Post Types'
         ]);
 
+        add_settings_field('webhook_options', __( 'Options', 'wp-jamstack-deployments' ), ['Crgeary\JAMstackDeployments\Field', 'checkboxes'], $key, 'general', [
+            'name' => "{$key}[webhook_options]",
+            'value' => isset($option['webhook_options']) ? $option['webhook_options'] : [],
+            'choices' => [],
+            'description' => __( 'All options and site options are passed when updated or added to the webhook.', 'wp-jamstack-deployments' ),
+            'legend' => 'Options'
+        ]);
+
         add_settings_field('webhook_taxonomies', __( 'Taxonomies', 'wp-jamstack-deployments' ), ['Crgeary\JAMstackDeployments\Field', 'checkboxes'], $key, 'general', [
             'name' => "{$key}[webhook_taxonomies]",
             'value' => isset($option['webhook_taxonomies']) ? $option['webhook_taxonomies'] : [],
