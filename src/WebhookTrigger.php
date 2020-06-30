@@ -51,7 +51,7 @@ class WebhookTrigger
             return;
         }
 
-        self::fireWebhook();
+        self::fireWebhook($id, $post);
     }
 
     /**
@@ -68,7 +68,9 @@ class WebhookTrigger
             return;
         }
 
-        self::fireWebhook();
+        $term = get_term($tax_id);
+        
+        self::fireWebhook($tax_id, $term);
     }
 
     /**
@@ -87,7 +89,9 @@ class WebhookTrigger
             return;
         }
 
-        self::fireWebhook();
+        $term = get_term($tax_id);
+        
+        self::fireWebhook($tax_id, $term);
     }
 
     /**
@@ -103,8 +107,10 @@ class WebhookTrigger
         if (!self::canFireForTaxonomy($id, $tax_id, $tax_slug)) {
             return;
         }
+
+        $term = get_term($tax_id);
         
-        self::fireWebhook();
+        self::fireWebhook($tax_id, $term);
     }
 
     /**
@@ -269,7 +275,7 @@ class WebhookTrigger
             return;
         }
 
-        self::fireWebhook();
+        self::fireWebhook($post->ID, $post);
     }
 
     /**
@@ -292,7 +298,7 @@ class WebhookTrigger
      *
      * @return WP_Error|array
      */
-    public static function fireWebhook()
+    public static function fireWebhook($record_id = null, $record = null)
     {
         $webhook = jamstack_deployments_get_webhook_url();
 
@@ -304,9 +310,7 @@ class WebhookTrigger
             return;
         }
 
-        $args = apply_filters('jamstack_deployments_webhook_request_args', [
-            'blocking' => false
-        ]);
+        $args = apply_filters('jamstack_deployments_webhook_request_args', $record_id, $record);
 
         $method = jamstack_deployments_get_webhook_method();
 

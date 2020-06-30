@@ -94,5 +94,26 @@ You can run code directly before or after you fire the webhook using the followi
 
 You can modify the arguments sent to the `wp_remote_safe_*` functions using the `jamstack_deployments_webhook_request_args` filter.
 
+Like so:
+
+```php
+add_filter(
+    'jamstack_deployments_webhook_request_args',
+    function ($post_id, $post) {
+        return [
+            'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
+            'body' => json_encode([
+                "ID" => $post_id,
+                "post_type" => (!empty($post->post_type) ? $post->post_type : $post->taxonomy),
+            ]),
+            'method' => 'POST',
+            'data_format' => 'body',
+        ];
+    },
+    10,
+    3
+);
+```
+
 ## License
 [GPL-3.0](LICENSE.md)
